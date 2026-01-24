@@ -14,11 +14,10 @@ def criararq():
 def getinfototal(arq):
     names=["Titulo", "Autor", "Paginas", "Data Inicio", "Data Termino"]
     try:
-        arq=open(arq, "rt")
-        for linha in arq:
-            dado=linha.split(";")
-            for i, tipo in enumerate(dado):
-                print(f"{names[i]}: {tipo}")
+        livros=converter(arq)
+        for livro in livros:
+            for i, dado in enumerate(livro):
+                print(f"{names[i]}: {dado}")
 
     except OSError as erro:
         print(f"Erro ao abrir o arquivo {erro}")
@@ -28,8 +27,6 @@ def getinfototal(arq):
 
     except IndexError:
         print("Erro nos dados do arquivo")
-
-    arq.close()
 
 
 def escreverarq(arq, dados):
@@ -46,20 +43,37 @@ def escreverarq(arq, dados):
     arq.close()
 
 
+def reescreverarq(arq, lista):
+    try:
+        arq=open(arq, "w")
+        for l in lista:
+            for n, i in enumerate(l):
+                if n==0:
+                    arq.write(f"{i}")
+                else:
+                    arq.write(f";{i}")
+    except OSError as erro:
+        print(f"Erro ao abrir o arquivo {erro}")
+    arq.close()
+
+
 def converter(arq):
     dados_conv=[]
     arq_conv=[]
-    arq=open(arq, "rt")
-    for linha in arq:
-        for dado in linha.split(";"):
-            dados_conv.append(dado)
-        arq_conv.append(dados_conv)
-        dados_conv=[]
-    
+    try:
+        arq=open(arq, "rt")
+        for linha in arq:
+            for dado in linha.split(";"):
+                dados_conv.append(dado)
+            arq_conv.append(dados_conv)
+            dados_conv=[]
+    except OSError as erro:
+        print(f"Erro ao abrir o arquivo {erro}")
+    arq.close()
+
     return arq_conv
 
-
+    
 
 criararq()
 
-print(converter("livros.txt"))
