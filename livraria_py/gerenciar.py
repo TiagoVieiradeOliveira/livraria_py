@@ -3,7 +3,7 @@ import os
 def criararq():
     try:
         if not os.path.exists("livros.txt"):
-            with open("livros.txt", "w") as arquivo:
+            with open("livros.txt", "w", encoding="utf-8") as arquivo:
                 arquivo.write("")
         return True
     except OSError as erro:
@@ -31,7 +31,7 @@ def getinfototal(arq):
 
 def escreverarq(arq, dados):
     try:
-        arq=open(arq, "at")
+        arq=open(arq, "at", encoding="utf-8")
         for n, i in enumerate(dados):
             if n==0:
                 arq.write(f"{i}")
@@ -45,7 +45,7 @@ def escreverarq(arq, dados):
 
 def reescreverarq(arq, lista):
     try:
-        arq=open(arq, "w")
+        arq=open(arq, "w", encoding="utf-8")
         for l in lista:
             for n, i in enumerate(l):
                 if n==0:
@@ -61,7 +61,7 @@ def converter(arq):
     dados_conv=[]
     arq_conv=[]
     try:
-        arq=open(arq, "rt")
+        arq=open(arq, "rt", encoding="utf-8")
         for linha in arq:
             for dado in linha.split(";"):
                 dados_conv.append(dado)
@@ -72,6 +72,18 @@ def converter(arq):
     arq.close()
 
     return arq_conv
+
+
+def mostrarLivro(livro):
+    print("-=-"*20)
+    print(f"{livro[0]:^60}")
+    print("-=-"*20)
+
+    names=["Titulo:", "Autor:", "Paginas:", "Data Inicio:", "Data Termino:"]
+    for i, dado in enumerate(livro):
+                print(f"{names[i]:<15} {dado:^50}")
+
+livro=["Jogos vorazes Circulo de fogo", "nao sei", "123", "23/10/2013", "23/10/2023"]
 
     
 

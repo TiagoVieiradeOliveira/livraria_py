@@ -1,5 +1,5 @@
 from gerenciar import *
-from imagens import *
+
 
 
 class Livro:
@@ -68,4 +68,5 @@ livro2=Livro("Bob esponja", "Calça quadrada", "24", "asff", "asads", " ")
 acervo=Acervo("teste.txt")
 d1=livro.getDados()
 d2=livro2.getDados()
+acervo.adicionarLivro(d2)
 acervo.pesquisarLivro("Bob esponja")
