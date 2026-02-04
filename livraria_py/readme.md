@@ -6,3 +6,6 @@ Para continuar:
 -Organizar a classe App
 -Fazer a classe dos botões
 -Ligar a interface com o beck
+ 03/02/26
+ preciso corrigir os erros da imagem, tem que guardar os arquivos das imagens em um cache, fazer a requisição sempre deixa o aplicativo travando muito
+ 

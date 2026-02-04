@@ -50,3 +50,5 @@ def getCapa(titulo):
         return formatarImagem(img, 145, 300)
     
 print(getCapa("Jogoas Vorazes"))
+img=Image.open("imagens/livro_nao_encontrado.webp")   
+sem_capa=CTkImage(light_image=img, size=(145, 300)) 

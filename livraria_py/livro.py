@@ -61,12 +61,5 @@ class Acervo:
     def visualizarLivro(self, livro):
         mostrarLivro(livro)
 
-
-livro=Livro("Dom casmurro", "nao sei", "123", "23/10/2013", "23/10/2023", " ")
-livro2=Livro("Bob esponja", "Calça quadrada", "24", "asff", "asads", " ")
-
-acervo=Acervo("teste.txt")
-d1=livro.getDados()
-d2=livro2.getDados()
-acervo.adicionarLivro(d2)
-acervo.pesquisarLivro("Bob esponja")
+a=Acervo("livros.txt")
+a.visualizarAcervo()

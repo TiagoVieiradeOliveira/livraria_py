@@ -1,9 +1,9 @@
 import os
 
-def criararq():
+def criararq(nome):
     try:
-        if not os.path.exists("livros.txt"):
-            with open("livros.txt", "w", encoding="utf-8") as arquivo:
+        if not os.path.exists(nome):
+            with open(nome, "w", encoding="utf-8") as arquivo:
                 arquivo.write("")
         return True
     except OSError as erro:
@@ -82,10 +82,4 @@ def mostrarLivro(livro):
     names=["Titulo:", "Autor:", "Paginas:", "Data Inicio:", "Data Termino:"]
     for i, dado in enumerate(livro):
                 print(f"{names[i]:<15} {dado:^50}")
-
-livro=["Jogos vorazes Circulo de fogo", "nao sei", "123", "23/10/2013", "23/10/2023"]
-
-    
-
-criararq()
 
