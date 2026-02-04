@@ -1,7 +1,16 @@
 import requests
 from PIL import Image
 from io import BytesIO
+import os
 from customtkinter import CTkImage
+import re 
+
+CACHE_DIR = "cache_capas"
+os.makedirs(CACHE_DIR, exist_ok=True)
+
+PLACEHOLDER = "imagens/livro_nao_encontrado.webp"
+
+
 
 def buscar_capa(titulo):
     url="https://openlibrary.org/search.json"
@@ -35,20 +44,35 @@ def formatarImagem(img, lar, alt):
     
     return CTkImage(light_image=img_red, size=(lar, alt))
     
-
+def normalizar(texto):
+    return re.sub(r"[^a-z0-9]+", "_", texto.lower()).strip("_")
 
 
 def getCapa(titulo):
-    capa=buscar_capa(titulo)
+    nome = normalizar(titulo) + ".jpg"
+    path = os.path.join(CACHE_DIR, nome)
 
+    # 👉 se já existe: carrega local
+    if os.path.exists(path):
+        img = Image.open(path)
+        return formatarImagem(img, 145, 300)
 
-    if not capa: 
-        img=Image.open("imagens/livro_nao_encontrado.webp")   
-        return CTkImage(light_image=img, size=(145, 300)) 
-    else:
-        img=(baixarImagem(capa))
+    # 👉 buscar online
+    url = buscar_capa(titulo)
+
+    if not url:
+        img = Image.open(PLACEHOLDER)
+        return formatarImagem(img, 145, 300)
+
+    try:
+        resposta = requests.get(url, timeout=10)
+        img = Image.open(BytesIO(resposta.content))
+        img.save(path)
+        return formatarImagem(img, 145, 300)
+
+    except Exception:
+        img = Image.open(PLACEHOLDER)
         return formatarImagem(img, 145, 300)
     
-print(getCapa("Jogoas Vorazes"))
-img=Image.open("imagens/livro_nao_encontrado.webp")   
-sem_capa=CTkImage(light_image=img, size=(145, 300)) 
+
+

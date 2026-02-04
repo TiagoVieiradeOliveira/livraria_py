@@ -33,7 +33,7 @@ class Acervo:
     def removerLivro(self, livro):
         livros=converter(self.arq)
         for i, l in enumerate(livros):
-            if livro in l[0]:
+            if livro == l[0]:
                 del livros[i]
 
         reescreverarq(self.arq, livros)

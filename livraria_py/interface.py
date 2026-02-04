@@ -1,7 +1,6 @@
 from customtkinter import *
 from livro import *
 from imagens import getCapa
-from imagens import sem_capa
 from gerenciar import *
 import os
 
@@ -13,7 +12,31 @@ class Label(CTkLabel):
         super().__init__(master,
                          image=self.img,
                          text=self.texto,
-                         text_color="#ffffff")
+                         text_color="#ffffff",
+                         font=("Open Sans", 18, "bold"),
+                         wraplength=220)
+
+class MaisInfo(CTkButton):
+    def __init__(self, master, img=None, livro=None, frame=None):
+        self.img=img
+        self.livro=livro
+        self.frame=frame
+        super().__init__(master,
+                         width=150,
+                         height=310,
+                         image=self.img,
+                         fg_color="#FAD52A",
+                         hover_color="#CAAB1F",
+                         text="",
+                         command=self.acao)
+        
+    def acao(self):
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+
+        info = Label(self.frame,texto=mostrarLivro(self.livro))
+
+        info.place(x=20, y=400)
 
 
 class Frame(CTkFrame):
@@ -107,6 +130,10 @@ class App(CTk):
         for i, livro in enumerate(livros):
 
             self.livro_frame=Frame(self.area_livros, 240, 400, "#4f43dd")
+            self.livro_frame.grid_rowconfigure(0, weight=1)
+            self.livro_frame.grid_rowconfigure(1, weight=3)
+
+            self.livro_frame.grid_columnconfigure(0, weight=1)
             self.livro_frame.grid_propagate(False)
 
             self.livro_frame.grid(row=line, column=coluna, padx=25, pady=20, sticky="nw")
@@ -118,10 +145,12 @@ class App(CTk):
                 coluna=0
 
             self.texto2=Label(self.livro_frame, None, texto=livro[0], cor="#ffffff")
-            self.texto2.grid(row=0, column=0, padx=10, pady=10)
+            self.texto2.grid(row=0, column=0, padx=10, pady=10, sticky="n")
             
-            self.texto=Label(self.livro_frame, sem_capa, None, None)
-            self.texto.grid(row=1, column=0, padx=10, pady=10)
+            self.mais_info=MaisInfo(self.livro_frame, getCapa(livro[0]), livro, self.visor)
+            self.mais_info.grid(row=1, column=0, padx=10, pady=10, sticky="n")
+
+           
 
 
     # def renderizarCapas(self):

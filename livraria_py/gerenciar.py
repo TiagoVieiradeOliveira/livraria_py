@@ -80,6 +80,14 @@ def mostrarLivro(livro):
     print("-=-"*20)
 
     names=["Titulo:", "Autor:", "Paginas:", "Data Inicio:", "Data Termino:"]
-    for i, dado in enumerate(livro):
-                print(f"{names[i]:<15} {dado:^50}")
+    str_dados=[]
+    for i, dado in enumerate(livro):    
+        str_dados.append(f"{names[i]} {dado}")
 
+    str_livro=f"{str_dados[0]}\n {str_dados[1]}\n {str_dados[2]}\n {str_dados[3]}\n {str_dados[4]}\n"
+
+    return str_livro
+
+
+livro=["Titulo:", "Autor:", "Paginas:", "Data Inicio:", "Data Termino:"]
+print(mostrarLivro(livro))
