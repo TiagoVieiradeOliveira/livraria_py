@@ -48,31 +48,33 @@ def normalizar(texto):
     return re.sub(r"[^a-z0-9]+", "_", texto.lower()).strip("_")
 
 
-def getCapa(titulo):
+def getCapa(titulo, lar=145, alt=300):
     nome = normalizar(titulo) + ".jpg"
     path = os.path.join(CACHE_DIR, nome)
 
-    # 👉 se já existe: carrega local
+    #  se já existe: carrega local
     if os.path.exists(path):
         img = Image.open(path)
-        return formatarImagem(img, 145, 300)
+        return formatarImagem(img, lar, alt)
 
-    # 👉 buscar online
+    # buscar online
     url = buscar_capa(titulo)
 
     if not url:
         img = Image.open(PLACEHOLDER)
-        return formatarImagem(img, 145, 300)
+        return formatarImagem(img, lar, alt)
 
     try:
         resposta = requests.get(url, timeout=10)
         img = Image.open(BytesIO(resposta.content))
         img.save(path)
-        return formatarImagem(img, 145, 300)
+        return formatarImagem(img, lar, alt)
 
     except Exception:
         img = Image.open(PLACEHOLDER)
-        return formatarImagem(img, 145, 300)
+        return formatarImagem(img, lar, alt)
     
+
+
 
 
